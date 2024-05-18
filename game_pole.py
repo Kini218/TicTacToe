@@ -67,6 +67,9 @@ class GamePole:
         return wins
 
     def click_on_board(self, event):
+        """
+        Кликаем на доску
+        """
         # Получаем координаты клика
         x, y = event.x, event.y
         
@@ -89,6 +92,9 @@ class GamePole:
             self.draw_win_line(wins)
 
     def draw_symbol(self, row, col, player):
+        """
+        Рисуем символ в определенной клетке
+        """
         x_start, y_start = col * 200, row * 200
         x_end, y_end = x_start + 200, y_start + 200
         
@@ -99,6 +105,9 @@ class GamePole:
             self.canvas.create_oval(x_start, y_start, x_end, y_end, outline="green", width=4)
 
     def draw_win_line(self, wins):
+        """
+        Рисуем победную линию
+        """
         for line in wins:
             # Находим минимальное и максимальное значение по x и y для линии
             min_x = min(point[1] for point in line)
