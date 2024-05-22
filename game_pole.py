@@ -93,7 +93,11 @@ class GamePole:
             self.canvas.bind("<Button-1>", self.disable_click)
             self.draw_win_line(wins)
             # Запуск функции через 2 секунды, чтобы было время увидеть линию
-            self.root.after(2000, self.trigger_alert)
+            self.root.after(2000, self.trigger_win_alert)
+        
+        # проверка на ничью
+        if all(all(cell is not None for cell in row) for row in self.board_state):
+            self.root.after(2000, self.trigger_no_win)
 
     def destroy_window(self):
         """
@@ -153,10 +157,23 @@ class GamePole:
             self.canvas.create_line(x_start, y_start, x_end, y_end, fill="red", width=4)
     
     def play_again(self):
-        """"""
-        pass
+        """
+        Запустить игру снова
+        """
 
-    def trigger_alert(self):
+        pass
+        
+    def trigger_no_win(self):
+        """
+        alert с сообщением о ничьей"""
+        result = askyesno(title="Ничья", message="Ничья, сыграем еще?")
+        if result: 
+            showinfo("Еще раз", "Отлично!")
+            self.play_again()
+        else:
+            self.destroy_window()
+
+    def trigger_win_alert(self):
         """
         alert с сообщением о выйгрыше и с предложением сыграть еще раз
         """
