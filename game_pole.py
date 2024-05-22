@@ -92,7 +92,14 @@ class GamePole:
         if wins:
             self.canvas.bind("<Button-1>", self.disable_click)
             self.draw_win_line(wins)
+            # Запуск функции через 2 секунды, чтобы было время увидеть линию
             self.root.after(2000, self.trigger_alert)
+
+    def destroy_window(self):
+        """
+        Закрытие окна
+        """
+        self.root.destroy()
 
 
     def disable_click(self, event):
@@ -164,9 +171,3 @@ class GamePole:
             self.play_again()
         else:
             self.destroy_window()
-    
-    def destroy_window(self):
-        """
-        Закрытие окна
-        """
-        self.root.destroy()
