@@ -8,9 +8,9 @@ class GamePole:
     """
     def __init__(self, root, game_mode, difficulty_level):
         """
-        Устанавливаем заголовок окна
-        Устанавливаем размеры окна
-        Устанавливаем режим игры и сложность
+        Устанавливается заголовок окна
+        Устанавливаются размеры окна
+        Устанавливается режим игры и сложность
         """
         self.root = root
         self.root.title("Крестики нолики")
@@ -29,7 +29,7 @@ class GamePole:
 
     def setup_board(self):
         """
-        Создаем игрововое поле
+        Создание игровового поля
         """
         # Создаем холст
         self.canvas = tk.Canvas(self.root, width=600, height=600)
@@ -69,7 +69,7 @@ class GamePole:
 
     def click_on_board(self, event):
         """
-        Кликаем на доску
+        Действия происходящие по клику на доску
         """
         # Получаем координаты клика
         x, y = event.x, event.y
@@ -103,7 +103,7 @@ class GamePole:
 
     def draw_symbol(self, row, col, player):
         """
-        Рисуем символ в определенной клетке
+        Простановка символа в определенной клетке
         """
         x_start, y_start = col * 200, row * 200
         x_end, y_end = x_start + 200, y_start + 200
@@ -116,7 +116,7 @@ class GamePole:
 
     def draw_win_line(self, wins):
         """
-        Рисуем победную линию
+        Рисуется линия, показывающая выйгрышную комбинацию
         """
         for line in wins:
             # Находим минимальное и максимальное значение по x и y для линии
@@ -146,9 +146,7 @@ class GamePole:
             self.canvas.create_line(x_start, y_start, x_end, y_end, fill="red", width=4)
     
     def play_again(self):
-        """
-
-        """
+        """"""
         pass
 
     def trigger_alert(self):
