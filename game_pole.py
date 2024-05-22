@@ -124,9 +124,13 @@ class GamePole:
             elif min_x == max_x:
                 x_start, y_start = min_x * 200 + 100, min_y * 200
                 x_end, y_end = max_x * 200 + 100, max_y * 200 + 200
-            # Если линия диагональная
-            else:
+            # Если главная диагональ
+            elif line == [(0, 0), (1, 1), (2, 2)]:
                 x_start, y_start = line[0][1] * 200, line[0][0] * 200
                 x_end, y_end = line[2][1] * 200 + 200, line[2][0] * 200 + 200
+            # Если диагональ побочная
+            elif line == [(0, 2), (1, 1), (2, 0)]:
+                x_start, y_start = line[0][1] * 200 + 200, line[0][0] * 200
+                x_end, y_end = line[2][1] * 200, line[2][0] * 200 + 200
 
             self.canvas.create_line(x_start, y_start, x_end, y_end, fill="red", width=4)
