@@ -9,10 +9,11 @@ class FinalPage:
 
     def __init__(self, root):
         """
-        Cоздаем корневой объект - окно
-        Устанавливаем заголовок окна
-        Устанавливаем размеры окна
+        Cоздается корневой объект - окно
+        Устанавливается заголовок окна
+        Устанавливаются размеры окна
         """
+
         self.root = root
         self.root.title("Крестики нолики")
         self.root.geometry("600x600+350+50")
@@ -21,9 +22,10 @@ class FinalPage:
 
     def setup_ui(self):
         """
-        Создаем холст
-        Рисуем элементы
+        Создается холст
+        Рисуются элементы
         """
+
         canvas = tk.Canvas(self.root)
         canvas.pack()
 
@@ -42,8 +44,9 @@ class FinalPage:
 
     def open_github(self, event):
         """
-        Открываем github по клику на ссылку
-        После открытия уничтожаем страницу
+        Открывается github по клику на ссылку
+        После открытия уничтожается страница
         """
+
         webbrowser.open_new("https://github.com/Kini218")
         self.root.destroy()

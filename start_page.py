@@ -8,10 +8,11 @@ class StartPage:
 
     def __init__(self, root):
         """
-        Cоздаем корневой объект - окно
-        Устанавливаем заголовок окна
-        Устанавливаем размеры окна
+        Cоздается корневой объект - окно
+        Устанавливается заголовок окна
+        Устанавливаются размеры окна
         """
+
         self.root = root
         self.root.title("Крестики нолики")
         self.root.geometry("600x600+350+50")
@@ -25,9 +26,10 @@ class StartPage:
 
     def setup_ui(self):
         """
-        Создаем холст
-        Рисуем элементы
+        Создается холст
+        Рисуются элементы
         """
+
         canvas = tk.Canvas(self.root)
         canvas.pack()
 
@@ -60,9 +62,10 @@ class StartPage:
 
     def setup_settings(self):
         """
-        Сохраняем режим игры и уровень сложности
-        Закрываем окно
+        Сохраняется режим игры и уровень сложности
+        Закрывается окно
         """
+
         selected_mode = self.mode_var.get()
 
         self.selected_game_mode = selected_mode

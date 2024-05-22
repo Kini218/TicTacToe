@@ -6,12 +6,14 @@ class GamePole:
     """
     Страница с игровым полем
     """
+
     def __init__(self, root, game_mode, difficulty_level):
         """
         Устанавливается заголовок окна
         Устанавливаются размеры окна
         Устанавливается режим игры и сложность
         """
+
         self.root = root
         self.root.title("Крестики нолики")
         self.root.geometry("600x600+350+50")
@@ -31,6 +33,7 @@ class GamePole:
         """
         Создание игровового поля
         """
+
         # Создаем холст
         self.canvas = tk.Canvas(self.root, width=600, height=600)
         self.canvas.pack()
@@ -47,6 +50,7 @@ class GamePole:
         """
         Проверка выйгрышных комбинаций
         """
+
         wins = []
 
         # Проверка строк
@@ -71,6 +75,7 @@ class GamePole:
         """
         Действия происходящие по клику на доску
         """
+
         # Получаем координаты клика
         x, y = event.x, event.y
         
@@ -103,6 +108,7 @@ class GamePole:
         """
         Закрытие окна
         """
+
         self.root.destroy()
 
 
@@ -110,12 +116,14 @@ class GamePole:
         """
         Отключение возможности ставить символ
         """
+
         return "break"
 
     def draw_symbol(self, row, col, player):
         """
         Простановка символа в определенной клетке
         """
+
         x_start, y_start = col * 200, row * 200
         x_end, y_end = x_start + 200, y_start + 200
         
@@ -129,6 +137,7 @@ class GamePole:
         """
         Рисуется линия, показывающая выйгрышную комбинацию
         """
+
         for line in wins:
             # Находим минимальное и максимальное значение по x и y для линии
             min_x = min(point[1] for point in line)
@@ -165,7 +174,9 @@ class GamePole:
         
     def trigger_no_win(self):
         """
-        alert с сообщением о ничьей"""
+        alert с сообщением о ничьей
+        """
+
         result = askyesno(title="Ничья", message="Ничья, сыграем еще?")
         if result: 
             showinfo("Еще раз", "Отлично!")
