@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from tkinter.messagebox import showinfo, askyesno
 
 class GamePole:
     """
@@ -89,7 +90,16 @@ class GamePole:
         # проверяем, есть ли победа
         wins = self.check_win()
         if wins:
+            self.canvas.bind("<Button-1>", self.disable_click)
             self.draw_win_line(wins)
+            self.root.after(2000, self.trigger_alert)
+
+
+    def disable_click(self, event):
+        """
+        Отключение возможности ставить символ
+        """
+        return "break"
 
     def draw_symbol(self, row, col, player):
         """
@@ -134,3 +144,31 @@ class GamePole:
                 x_end, y_end = line[2][1] * 200, line[2][0] * 200 + 200
 
             self.canvas.create_line(x_start, y_start, x_end, y_end, fill="red", width=4)
+    
+    def play_again(self):
+        """
+
+        """
+        pass
+
+    def trigger_alert(self):
+        """
+        alert с сообщением о выйгрыше и с предложением сыграть еще раз
+        """
+
+        if self.current_player == "O":
+            result = askyesno(title="Победа", message="Крестики победили, сыграем еще?")
+        else:
+            result = askyesno(title="Победа", message="Нолики победили, сыграем еще?")
+        
+        if result: 
+            showinfo("Еще раз", "Отлично!")
+            self.play_again()
+        else:
+            self.destroy_window()
+    
+    def destroy_window(self):
+        """
+        Закрытие окна
+        """
+        self.root.destroy()
