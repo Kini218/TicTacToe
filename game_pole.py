@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from tkinter.messagebox import showinfo, askyesno
+from tkinter.messagebox import askyesno
 
 class GamePole:
     """
@@ -18,6 +18,10 @@ class GamePole:
         self.root.title("Крестики нолики")
         self.root.geometry("600x600+350+50")
 
+        # Создаем холст
+        self.canvas = tk.Canvas(self.root, width=600, height=600)
+        self.canvas.pack()
+
         self.setup_board()
 
         self.game_mode = game_mode
@@ -33,10 +37,6 @@ class GamePole:
         """
         Создание игровового поля
         """
-
-        # Создаем холст
-        self.canvas = tk.Canvas(self.root, width=600, height=600)
-        self.canvas.pack()
 
         # Горизонтальные линии
         self.canvas.create_line(0, 200, 600, 200, fill="black", width=4)
@@ -70,6 +70,12 @@ class GamePole:
             wins.append([(0, 2), (1, 1), (2, 0)])
 
         return wins
+
+    def clear_canvas(self):
+        """
+        Очистить экран
+        """
+        self.canvas.delete("all")
 
     def click_on_board(self, event):
         """
@@ -110,7 +116,6 @@ class GamePole:
         """
 
         self.root.destroy()
-
 
     def disable_click(self, event):
         """
@@ -170,7 +175,12 @@ class GamePole:
         Запустить игру снова
         """
 
-        pass
+        self.clear_canvas()
+        self.setup_board()
+        self.current_player = "X"
+        self.board_state = [[None for _ in range(3)] for _ in range(3)]
+        # Привязываем событие клика мыши к холсту
+        self.canvas.bind("<Button-1>", self.click_on_board)
         
     def trigger_no_win(self):
         """
@@ -179,7 +189,6 @@ class GamePole:
 
         result = askyesno(title="Ничья", message="Ничья, сыграем еще?")
         if result: 
-            showinfo("Еще раз", "Отлично!")
             self.play_again()
         else:
             self.destroy_window()
@@ -195,7 +204,6 @@ class GamePole:
             result = askyesno(title="Победа", message="Нолики победили, сыграем еще?")
         
         if result: 
-            showinfo("Еще раз", "Отлично!")
             self.play_again()
         else:
             self.destroy_window()
