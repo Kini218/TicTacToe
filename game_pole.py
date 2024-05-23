@@ -108,17 +108,7 @@ class GamePole:
         # Определение, в какой квадрат был сделан клик
         row, col = y // 200, x // 200
 
-        # Проверка, что квадрат пустой
-        if self.board_state[row][col] == None and self.winner == False:
-            self.board_state[row][col] = self.current_player
-
-            # Отрисовка крестик или нолик
-            self.draw_symbol(row, col, self.current_player)
-
-            # Смена текущего игрока
-            self.current_player = 'O' if self.current_player == 'X' else 'X'
-
-            self.check_win()
+        self.prepare_move(row, col)
 
         if self.game_mode == "С компьютером":
             self.computer_move()
@@ -131,16 +121,8 @@ class GamePole:
         minimax = MinimaxAlgorithm(self.board_state, self.difficulty_level)
 
         row, col = minimax.make_move()
-        # Проверка, что квадрат пустой
-        if self.board_state[row][col] == None and self.winner == False:
-            self.board_state[row][col] = self.current_player
-
-            # Отрисовка крестик или нолик
-            self.draw_symbol(row, col, self.current_player)
-
-            # Смена текущего игрока
-            self.current_player = 'O' if self.current_player == 'X' else 'X'
-            self.check_win()
+        self.prepare_move(row, col)
+        
 
     def destroy_window(self):
         """
@@ -214,7 +196,25 @@ class GamePole:
         self.winner = False
         # Привязка события клика мыши к холсту
         self.canvas.bind("<Button-1>", self.click_on_board)
-        
+    
+    def prepare_move(self, row, col):
+        """
+        Подготовка к ходу
+        Сам ход
+        И смена игрока
+        """
+
+        # Проверка, что квадрат пустой
+        if self.board_state[row][col] == None and self.winner == False:
+            self.board_state[row][col] = self.current_player
+
+            # Отрисовка крестик или нолик
+            self.draw_symbol(row, col, self.current_player)
+
+            # Смена текущего игрока
+            self.current_player = 'O' if self.current_player == 'X' else 'X'
+            self.check_win()
+    
     def trigger_no_win(self):
         """
         alert с сообщением о ничьей
