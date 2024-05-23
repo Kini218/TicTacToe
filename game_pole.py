@@ -1,6 +1,6 @@
 import tkinter as tk
-from tkinter import ttk
 from tkinter.messagebox import askyesno
+from game_algorithm import MinimaxAlgorithm
 
 class GamePole:
     """
@@ -28,6 +28,7 @@ class GamePole:
         self.difficulty_level = difficulty_level
 
         self.current_player = "X"
+        self.winner = False
         self.board_state = [[None for _ in range(3)] for _ in range(3)]
 
         # Привязываем событие клика мыши к холсту
@@ -47,6 +48,21 @@ class GamePole:
         self.canvas.create_line(400, 0, 400, 600, fill="black", width=4)
 
     def check_win(self):
+        # проверяем, есть ли победа
+        wins = self.check_win_combinations()
+        if wins:
+            self.canvas.bind("<Button-1>", self.disable_click)
+            self.draw_win_line(wins)
+            # Запуск функции через 2 секунды, чтобы было время увидеть линию
+            self.root.after(2000, self.trigger_win_alert)
+            self.winner = True
+        
+        # проверка на ничью
+        elif all(all(cell is not None for cell in row) for row in self.board_state):
+            self.root.after(2000, self.trigger_no_win)
+            self.winner = True
+
+    def check_win_combinations(self):
         """
         Проверка выйгрышных комбинаций
         """
@@ -89,7 +105,7 @@ class GamePole:
         row, col = y // 200, x // 200
 
         # Проверяем, что квадрат пустой
-        if self.board_state[row][col] == None:
+        if self.board_state[row][col] == None and self.winner == False:
             self.board_state[row][col] = self.current_player
 
             # Рисуем крестик или нолик
@@ -97,18 +113,30 @@ class GamePole:
 
             # Меняем текущего игрока
             self.current_player = 'O' if self.current_player == 'X' else 'X'
-    
-        # проверяем, есть ли победа
-        wins = self.check_win()
-        if wins:
-            self.canvas.bind("<Button-1>", self.disable_click)
-            self.draw_win_line(wins)
-            # Запуск функции через 2 секунды, чтобы было время увидеть линию
-            self.root.after(2000, self.trigger_win_alert)
-        
-        # проверка на ничью
-        if all(all(cell is not None for cell in row) for row in self.board_state):
-            self.root.after(2000, self.trigger_no_win)
+
+            self.check_win()
+
+        if self.game_mode == "С компьютером":
+            self.computer_move()
+
+    def computer_move(self):
+        """
+        Компьютер делает ход
+        """
+
+        minimax = MinimaxAlgorithm(self.board_state, self.difficulty_level)
+
+        row, col = minimax.make_move()
+        # Проверяем, что квадрат пустой
+        if self.board_state[row][col] == None and self.winner == False:
+            self.board_state[row][col] = self.current_player
+
+            # Рисуем крестик или нолик
+            self.draw_symbol(row, col, self.current_player)
+
+            # Меняем текущего игрока
+            self.current_player = 'O' if self.current_player == 'X' else 'X'
+            self.check_win()
 
     def destroy_window(self):
         """
@@ -179,6 +207,7 @@ class GamePole:
         self.setup_board()
         self.current_player = "X"
         self.board_state = [[None for _ in range(3)] for _ in range(3)]
+        self.winner = False
         # Привязываем событие клика мыши к холсту
         self.canvas.bind("<Button-1>", self.click_on_board)
         
