@@ -18,7 +18,7 @@ class GamePole:
         self.root.title("Крестики нолики")
         self.root.geometry("600x600+350+50")
 
-        # Создаем холст
+        # Создание холста
         self.canvas = tk.Canvas(self.root, width=600, height=600)
         self.canvas.pack()
 
@@ -31,7 +31,7 @@ class GamePole:
         self.winner = False
         self.board_state = [[None for _ in range(3)] for _ in range(3)]
 
-        # Привязываем событие клика мыши к холсту
+        # Привязка события клика мыши к холсту
         self.canvas.bind("<Button-1>", self.click_on_board)
 
     def setup_board(self):
@@ -48,7 +48,11 @@ class GamePole:
         self.canvas.create_line(400, 0, 400, 600, fill="black", width=4)
 
     def check_win(self):
-        # проверяем, есть ли победа
+        """
+        Проверка на победу или ничью
+        """
+
+        # Проверка, есть ли победа
         wins = self.check_win_combinations()
         if wins:
             self.canvas.bind("<Button-1>", self.disable_click)
@@ -57,7 +61,7 @@ class GamePole:
             self.root.after(2000, self.trigger_win_alert)
             self.winner = True
         
-        # проверка на ничью
+        # Проверка на ничью
         elif all(all(cell is not None for cell in row) for row in self.board_state):
             self.root.after(2000, self.trigger_no_win)
             self.winner = True
@@ -98,20 +102,20 @@ class GamePole:
         Действия происходящие по клику на доску
         """
 
-        # Получаем координаты клика
+        # Получение координат клика
         x, y = event.x, event.y
         
-        # Определяем, в какой квадрат был сделан клик
+        # Определение, в какой квадрат был сделан клик
         row, col = y // 200, x // 200
 
-        # Проверяем, что квадрат пустой
+        # Проверка, что квадрат пустой
         if self.board_state[row][col] == None and self.winner == False:
             self.board_state[row][col] = self.current_player
 
-            # Рисуем крестик или нолик
+            # Отрисовка крестик или нолик
             self.draw_symbol(row, col, self.current_player)
 
-            # Меняем текущего игрока
+            # Смена текущего игрока
             self.current_player = 'O' if self.current_player == 'X' else 'X'
 
             self.check_win()
@@ -127,14 +131,14 @@ class GamePole:
         minimax = MinimaxAlgorithm(self.board_state, self.difficulty_level)
 
         row, col = minimax.make_move()
-        # Проверяем, что квадрат пустой
+        # Проверка, что квадрат пустой
         if self.board_state[row][col] == None and self.winner == False:
             self.board_state[row][col] = self.current_player
 
-            # Рисуем крестик или нолик
+            # Отрисовка крестик или нолик
             self.draw_symbol(row, col, self.current_player)
 
-            # Меняем текущего игрока
+            # Смена текущего игрока
             self.current_player = 'O' if self.current_player == 'X' else 'X'
             self.check_win()
 
@@ -172,13 +176,13 @@ class GamePole:
         """
 
         for line in wins:
-            # Находим минимальное и максимальное значение по x и y для линии
+            # Нахождение минимального и максимального значений по x и y для линии
             min_x = min(point[1] for point in line)
             max_x = max(point[1] for point in line)
             min_y = min(point[0] for point in line)
             max_y = max(point[0] for point in line)
 
-            # Выбираем начальную и конечную точку линии в зависимости от направления
+            # Выбор начальной и конечной точки линии в зависимости от направления
             # Если линия горизонтальная
             if min_y == max_y:
                 x_start, y_start = min_x * 200, min_y * 200 + 100
@@ -208,7 +212,7 @@ class GamePole:
         self.current_player = "X"
         self.board_state = [[None for _ in range(3)] for _ in range(3)]
         self.winner = False
-        # Привязываем событие клика мыши к холсту
+        # Привязка события клика мыши к холсту
         self.canvas.bind("<Button-1>", self.click_on_board)
         
     def trigger_no_win(self):
