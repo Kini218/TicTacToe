@@ -118,9 +118,9 @@ class GamePole:
         Компьютер делает ход
         """
 
-        minimax = GameAlgorithm(self.board_state, self.difficulty_level)
+        algorithm = GameAlgorithm(self.board_state, self.difficulty_level)
 
-        row, col = minimax.make_move()
+        row, col = algorithm.make_move()
         self.prepare_move(row, col)
         
 
