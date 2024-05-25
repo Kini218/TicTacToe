@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter.messagebox import askyesno
-from game_algorithm import MinimaxAlgorithm
+from game_algorithm import GameAlgorithm
 
 class GamePole:
     """
@@ -118,7 +118,7 @@ class GamePole:
         Компьютер делает ход
         """
 
-        minimax = MinimaxAlgorithm(self.board_state, self.difficulty_level)
+        minimax = GameAlgorithm(self.board_state, self.difficulty_level)
 
         row, col = minimax.make_move()
         self.prepare_move(row, col)
