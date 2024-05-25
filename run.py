@@ -2,21 +2,29 @@ from start_page import StartPage
 from game_pole import GamePole
 from final_page import FinalPage
 import tkinter as tk
-from tkinter import ttk
 
 
 def form_start_page():
+    """
+    Отрисовка начальной страницы
+    """
     root = tk.Tk()
     app = StartPage(root)
     root.mainloop()
     return app.selected_game_mode, app.selected_difficulty_level
 
 def form_game_pole(game_mode, difficulty_level):
+    """
+    Отрисовка игрового поля
+    """
     root = tk.Tk()
     app = GamePole(root, game_mode, difficulty_level)
     root.mainloop()
 
 def form_final_page():
+    """
+    Отрисовка финальной страницы
+    """
     root = tk.Tk()
     app = FinalPage(root)
     root.mainloop()
