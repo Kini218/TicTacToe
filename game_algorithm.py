@@ -4,6 +4,7 @@ class GameAlgorithm:
     """
     Алгоритм для игры в крестики нолики с выбором сложности
     """
+
     def __init__(self, board_state, difficulty_level):
         """
         Устанавливаетя состояние доски 
