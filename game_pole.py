@@ -199,7 +199,7 @@ class GamePole:
         self.current_player = "X"
         self.player_starts = not self.player_starts
 
-        if not self.player_starts:
+        if not self.player_starts and self.game_mode == "С компьютером":
             self.computer_move()
 
     def prepare_move(self, row, col):
