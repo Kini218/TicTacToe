@@ -30,6 +30,8 @@ class GamePole:
         self.current_player = "X"
         self.winner = False
         self.board_state = [[None for _ in range(3)] for _ in range(3)]
+        # True, если человек начинает, False, если компьютер
+        self.player_starts = True
 
         # Привязка события клика мыши к холсту
         self.canvas.bind("<Button-1>", self.click_on_board)
@@ -118,11 +120,10 @@ class GamePole:
         Компьютер делает ход
         """
 
-        algorithm = GameAlgorithm(self.board_state, self.difficulty_level)
+        algorithm = GameAlgorithm(self.board_state, self.difficulty_level, self.player_starts)
 
         row, col = algorithm.make_move()
         self.prepare_move(row, col)
-        
 
     def destroy_window(self):
         """
@@ -191,12 +192,16 @@ class GamePole:
 
         self.clear_canvas()
         self.setup_board()
-        self.current_player = "X"
         self.board_state = [[None for _ in range(3)] for _ in range(3)]
         self.winner = False
         # Привязка события клика мыши к холсту
         self.canvas.bind("<Button-1>", self.click_on_board)
-    
+        self.current_player = "X"
+        self.player_starts = not self.player_starts
+
+        if not self.player_starts:
+            self.computer_move()
+
     def prepare_move(self, row, col):
         """
         Подготовка к ходу
