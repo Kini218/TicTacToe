@@ -5,28 +5,35 @@ class GameAlgorithm:
     Алгоритм для игры в крестики нолики с выбором сложности
     """
 
-    def __init__(self, board_state, difficulty_level):
+    def __init__(self, board_state, difficulty_level, player_starts):
         """
         Устанавливаетя состояние доски 
         И выбранная сложность
+        Также устанавливается, кто будет ходить первым
         """
 
         self.board_state = board_state
         self.difficulty_level = difficulty_level
+        self.player_starts = player_starts
 
     def make_move(self):
         """
         В зависимости от уровня сложности ход делают разные алгоритмы
         """
 
+        if self.player_starts:
+            player_opponent = ['O', 'X']
+        else:
+            player_opponent = ['X', 'O']
+            
         if self.difficulty_level == 0:
             return self.random_move()
         elif self.difficulty_level == 1:
-            return self.pattern_move('O', 'X')
+            return self.pattern_move(*player_opponent)
         elif self.difficulty_level == 2:
-            return self.best_move('O', 'X')
+            return self.best_move(*player_opponent)
         elif self.difficulty_level == 3:
-            return self.best_move_alpha_beta('O', 'X')
+            return self.best_move_alpha_beta(*player_opponent)
 
     def random_move(self):
         """
