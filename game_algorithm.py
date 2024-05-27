@@ -7,9 +7,12 @@ class GameAlgorithm:
 
     def __init__(self, board_state, difficulty_level, player_starts):
         """
-        Устанавливаетя состояние доски 
-        И выбранная сложность
-        Также устанавливается, кто будет ходить первым
+        Инициализируется игра с заданным состоянием доски, уровнем сложности и начальным игроком.
+        
+        Args:
+            board_state (list of list of str): Текущее состояние доски.
+            difficulty_level (int): Уровень сложности игры (от 0 до 3).
+            player_starts (bool): True, если игрок начинает, False, если начинает противник.
         """
 
         self.board_state = board_state
@@ -18,7 +21,10 @@ class GameAlgorithm:
 
     def make_move(self):
         """
-        В зависимости от уровня сложности ход делают разные алгоритмы
+        Делается ход в зависимости от выбранного уровня сложности.
+
+        Returns:
+            tuple: Координаты хода.
         """
 
         if self.player_starts:
@@ -37,7 +43,10 @@ class GameAlgorithm:
 
     def random_move(self):
         """
-        Ход делается рандомно в свободное поле
+        Делает случайный ход в пустую ячейку.
+
+        Returns:
+            tuple: Координаты хода.
         """
 
         empty_cells = [(i, j) for i in range(3) for j in range(3) if self.board_state[i][j] is None]
@@ -45,8 +54,15 @@ class GameAlgorithm:
     
     def pattern_move(self, player, opponent):
         """
-        Проверка, можно ли победить одним ходом
-        Если нельзя, проверка, какой ход сделать, чтобы заблокировать оппонента
+        Проверяет возможность выиграть одним ходом.
+        Если выиграть нельзя, проверяет, можно ли заблокировать ход противника.
+
+        Args:
+            player (str): Символ игрока ('X' или 'O').
+            opponent (str): Символ противника ('X' или 'O').
+
+        Returns:
+            tuple: Координаты хода.
         """
 
         # Проверка на победный ход
@@ -73,7 +89,13 @@ class GameAlgorithm:
 
     def check_win(self, player):
         """
-        Проверка всех возможных выигрышных комбинаций
+        Проверяет все возможные выигрышные комбинации.
+
+        Args:
+            player (str): Символ игрока ('X' или 'O').
+
+        Returns:
+            bool: True, если игрок выиграл, иначе False.
         """
 
         win_states = [
@@ -90,7 +112,14 @@ class GameAlgorithm:
 
     def best_move(self, player, opponent):
         """
-        Поиск лучшего хода используя алгоритм minimax
+        Находит лучший ход, используя алгоритм minimax.
+
+        Args:
+            player (str): Символ игрока ('X' или 'O').
+            opponent (str): Символ противника ('X' или 'O').
+
+        Returns:
+            tuple: Координаты хода.
         """
 
         best_score = -float('inf')
@@ -108,7 +137,16 @@ class GameAlgorithm:
 
     def minimax(self, depth, is_maximizing, player, opponent):
         """
-        Алгоритм minimax
+        Алгоритм minimax для поиска оптимального хода.
+
+        Args:
+            depth (int): Глубина рекурсии.
+            is_maximizing (bool): Флаг, указывающий, оптимизирует ли текущий игрок.
+            player (str): Символ игрока ('X' или 'O').
+            opponent (str): Символ противника ('X' или 'O').
+
+        Returns:
+            int: Оценка текущего состояния доски.
         """
 
         if self.check_win(player):
@@ -141,7 +179,14 @@ class GameAlgorithm:
 
     def best_move_alpha_beta(self, player, opponent):
         """
-        Поиск лучшего хода используя алгоритм minimax с альфа-бета отсечением
+        Находит лучший ход, используя алгоритм minimax с альфа-бета отсечением.
+
+        Args:
+            player (str): Символ игрока ('X' или 'O').
+            opponent (str): Символ противника ('X' или 'O').
+
+        Returns:
+            tuple: Координаты хода.
         """
 
         best_score = -float('inf')
@@ -159,7 +204,18 @@ class GameAlgorithm:
 
     def minimax_alpha_beta(self, depth, alpha, beta, is_maximizing, player, opponent):
         """
-        Minimax алгоритм с альфа-бета отсечением
+        Алгоритм minimax с альфа-бета отсечением.
+
+        Args:
+            depth (int): Глубина рекурсии.
+            alpha (float): Текущее значение альфа.
+            beta (float): Текущее значение бета.
+            is_maximizing (bool): Флаг, указывающий, оптимизирует ли текущий игрок.
+            player (str): Символ игрока ('X' или 'O').
+            opponent (str): Символ противника ('X' или 'O').
+
+        Returns:
+            int: Оценка текущего состояния доски.
         """
 
         if self.check_win(player):

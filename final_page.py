@@ -12,6 +12,9 @@ class FinalPage:
         Cоздается корневой объект - окно
         Устанавливается заголовок окна
         Устанавливаются размеры окна
+
+        Args:
+            root (tk.Tk): Корневой объект Tkinter.
         """
 
         self.root = root
@@ -22,8 +25,7 @@ class FinalPage:
 
     def setup_ui(self):
         """
-        Создается холст
-        Рисуются элементы
+        Создание и размещение элементов интерфейса на финальной странице.
         """
 
         canvas = tk.Canvas(self.root)
@@ -44,8 +46,12 @@ class FinalPage:
 
     def open_github(self, event):
         """
-        Открывается github по клику на ссылку
-        После открытия уничтожается страница
+        Открытие GitHub по клику на ссылку.
+
+        Args:
+            event (tk.Event): Событие клика на ссылку.
+        
+        Открывается ссылка на GitHub в веб-браузере и закрывается окно.
         """
 
         webbrowser.open_new("https://github.com/Kini218")

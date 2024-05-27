@@ -12,6 +12,11 @@ class GamePole:
         Устанавливается заголовок окна
         Устанавливаются размеры окна
         Устанавливается режим игры и сложность
+
+        Args:
+            root (tk.Tk): Корневой объект Tkinter.
+            game_mode (str): Режим игры (вдвоем или с компьютером).
+            difficulty_level (int): Уровень сложности игры.
         """
 
         self.root = root
@@ -71,6 +76,9 @@ class GamePole:
     def check_win_combinations(self):
         """
         Проверка выйгрышных комбинаций
+
+        Returns:
+            list: Список выигрышных комбинаций.
         """
 
         wins = []
@@ -101,7 +109,10 @@ class GamePole:
 
     def click_on_board(self, event):
         """
-        Действия происходящие по клику на доску
+        Обработка клика на доске.
+
+        Args:
+            event (tk.Event): Событие клика.
         """
 
         # Получение координат клика
@@ -135,6 +146,9 @@ class GamePole:
     def disable_click(self, event):
         """
         Отключение возможности ставить символ
+
+        Args:
+            event (tk.Event): Событие клика.
         """
 
         return "break"
@@ -142,6 +156,11 @@ class GamePole:
     def draw_symbol(self, row, col, player):
         """
         Простановка символа в определенной клетке
+
+        Args:
+            row (int): Номер строки.
+            col (int): Номер столбца.
+            player (str): Символ игрока ('X' или 'O').
         """
 
         x_start, y_start = col * 200, row * 200
@@ -156,6 +175,9 @@ class GamePole:
     def draw_win_line(self, wins):
         """
         Рисуется линия, показывающая выйгрышную комбинацию
+
+        Args:
+            wins (list): Список выигрышных комбинаций.
         """
 
         for line in wins:
@@ -187,7 +209,7 @@ class GamePole:
     
     def play_again(self):
         """
-        Запустить игру снова
+        Запуск игры снова
         """
 
         self.clear_canvas()
@@ -204,9 +226,11 @@ class GamePole:
 
     def prepare_move(self, row, col):
         """
-        Подготовка к ходу
-        Сам ход
-        И смена игрока
+        Подготовка и выполнение хода.
+
+        Args:
+            row (int): Номер строки.
+            col (int): Номер столбца.
         """
 
         # Проверка, что квадрат пустой
@@ -222,7 +246,7 @@ class GamePole:
     
     def trigger_no_win(self):
         """
-        alert с сообщением о ничьей
+        Вывод сообщения о ничьей предложение сыграть еще раз.
         """
 
         result = askyesno(title="Ничья", message="Ничья, сыграем еще?")
@@ -233,7 +257,7 @@ class GamePole:
 
     def trigger_win_alert(self):
         """
-        alert с сообщением о выйгрыше и с предложением сыграть еще раз
+        Вывод сообщения о победе и предложение сыграть еще раз.
         """
 
         if self.current_player == "O":

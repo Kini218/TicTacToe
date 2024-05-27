@@ -7,6 +7,9 @@ import tkinter as tk
 def form_start_page():
     """
     Отрисовка начальной страницы
+
+    Returns:
+        tuple: Возвращает выбранный режим игры и уровень сложности.
     """
     root = tk.Tk()
     app = StartPage(root)
@@ -16,6 +19,10 @@ def form_start_page():
 def form_game_pole(game_mode, difficulty_level):
     """
     Отрисовка игрового поля
+
+    Args:
+        game_mode (str): Выбранный режим игры.
+        difficulty_level (int): Уровень сложности игры.
     """
     root = tk.Tk()
     app = GamePole(root, game_mode, difficulty_level)
