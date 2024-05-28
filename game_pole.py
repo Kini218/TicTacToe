@@ -153,7 +153,7 @@ class GamePole:
 
         return "break"
 
-    def draw_symbol(self, row, col, player):
+    def draw_symbol(self, row, col):
         """
         Простановка символа в определенной клетке
 
@@ -166,10 +166,10 @@ class GamePole:
         x_start, y_start = col * 200, row * 200
         x_end, y_end = x_start + 200, y_start + 200
         
-        if player == 'X':
+        if self.current_player == 'X':
             self.canvas.create_line(x_start, y_start, x_end, y_end, fill="blue", width=4)
             self.canvas.create_line(x_start, y_end, x_end, y_start, fill="blue", width=4)
-        elif player == 'O':
+        elif self.current_player == 'O':
             self.canvas.create_oval(x_start, y_start, x_end, y_end, outline="green", width=4)
 
     def draw_win_line(self, wins):
@@ -238,7 +238,7 @@ class GamePole:
             self.board_state[row][col] = self.current_player
 
             # Отрисовка крестик или нолик
-            self.draw_symbol(row, col, self.current_player)
+            self.draw_symbol(row, col)
 
             # Смена текущего игрока
             self.current_player = 'O' if self.current_player == 'X' else 'X'
