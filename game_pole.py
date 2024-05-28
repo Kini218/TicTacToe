@@ -121,10 +121,12 @@ class GamePole:
         # Определение, в какой квадрат был сделан клик
         row, col = y // 200, x // 200
 
-        self.prepare_move(row, col)
+        # Проверка, что квадрат пустой
+        if self.board_state[row][col] == None and self.winner == False:
+            self.prepare_move(row, col)
 
-        if self.game_mode == "С компьютером":
-            self.computer_move()
+            if self.game_mode == "С компьютером" and self.winner == False:
+                self.computer_move()
 
     def computer_move(self):
         """
@@ -233,16 +235,14 @@ class GamePole:
             col (int): Номер столбца.
         """
 
-        # Проверка, что квадрат пустой
-        if self.board_state[row][col] == None and self.winner == False:
-            self.board_state[row][col] = self.current_player
+        self.board_state[row][col] = self.current_player
 
-            # Отрисовка крестик или нолик
-            self.draw_symbol(row, col)
+        # Отрисовка крестик или нолик
+        self.draw_symbol(row, col)
 
-            # Смена текущего игрока
-            self.current_player = 'O' if self.current_player == 'X' else 'X'
-            self.check_win()
+        # Смена текущего игрока
+        self.current_player = 'O' if self.current_player == 'X' else 'X'
+        self.check_win()
     
     def trigger_no_win(self):
         """
